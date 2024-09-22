@@ -33,7 +33,7 @@ build/
 .vscode/
 
 
-/.terraform/
+infra/.terraform/
 *.lock.hcl
 *.tfstate
 *.tfstate.backup
