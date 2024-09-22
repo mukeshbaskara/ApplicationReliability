@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-app-ingress
+  namespace: flyingclub
+  annotations:
+    # ALB-specific annotations
+    alb.ingress.kubernetes.io/scheme: internal          # or internal for internal-only access
+    alb.ingress.kubernetes.io/target-type: ip
+    #alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    #alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:region:account-id:certificate/certificate-id # Required for HTTPS (optional if using HTTP only)
+    #alb.ingress.kubernetes.io/actions.ssl-redirect: |
+    # {"Type": "redirect", "RedirectConfig": {"Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}
+  labels:
+    app: demo-app
+spec:
+  ingressClassName: alb
+  rules:
+    - host: chennaiflyingclub.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: demo-app-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - chennaiflyingclub.com
+      #secretName: tls-secret   # Create this secret to store SSL certificates

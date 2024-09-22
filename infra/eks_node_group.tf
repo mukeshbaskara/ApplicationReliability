@@ -42,11 +42,11 @@ resource "aws_eks_node_group" "eks_node_group" {
     ec2_ssh_key     = "prometheus-server-key"
   }
   scaling_config {
-    desired_size = 1
-    max_size     = 2
-    min_size     = 1
+    desired_size = 3
+    max_size     = 4
+    min_size     = 2
   }
-  capacity_type = "SPOT"
+  capacity_type = "ON_DEMAND"
   instance_types = ["t2.micro"]
   update_config {
     max_unavailable = 1

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: flyingclub
+  labels:
+    app: demo-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app-container
+        image: 247940658137.dkr.ecr.us-east-1.amazonaws.com/demo-ns/demo-repo:5.0.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

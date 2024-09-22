@@ -11,6 +11,7 @@ resource "aws_subnet" "public_subnets" {
   vpc_id     = aws_vpc.flyingclub_vpc.id
   cidr_block = var.public_subnets[count.index].cidr_block
   availability_zone = var.public_subnets[count.index].availability_zone
+  map_public_ip_on_launch = true
   tags = {
     Name = lookup(var.public_subnets[count.index].tags,"Name", "public_subnet_${count.index}")
   }
@@ -23,6 +24,7 @@ resource "aws_subnet" "private_subnets" {
   availability_zone = var.private_subnets[count.index].availability_zone
   tags = {
     Name = lookup(var.private_subnets[count.index].tags,"Name", "private_subnet_${count.index}")
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 

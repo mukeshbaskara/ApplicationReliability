@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-service
+  namespace: flyingclub
+  labels:
+    app: demo-app-svc
+spec:
+  selector:
+    app: demo-app
+  ports:
+    - protocol: TCP
+      port: 80       # Internal service port
+      targetPort: 8080 # Container port exposed in the Deployment
+  type: ClusterIP
